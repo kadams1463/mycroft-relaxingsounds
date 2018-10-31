@@ -28,13 +28,10 @@ class RelaxingSoundsSkill(MycroftSkill):
         super(RelaxingSoundsSkill, self).__init__(name="RelaxingSoundsSkill")
         self.process = None
 
-    def stop(self):
-        pass
-
     # Initialize the RelaxingSoundsSkill.
     def initialize(self):
         # AudioService from Mycroft Skills library.
-        self.audio_service = AudioService(self.emitter)
+        #self.audio_service = AudioService(self.emitter)
 
         # Create the RequestSoundIntent using the required request.voc file and optional <sound>.voc files.
         white_noise_intent = IntentBuilder("RequestSoundIntent").require("request").require("white-noise").build()
@@ -46,10 +43,15 @@ class RelaxingSoundsSkill(MycroftSkill):
     # Create the dialog from the response.dialog for Mycroft to speak.
     def handle_request_sound_intent(self, message):
         self.speak_dialog("response")
-        #self.audio_service.play("file:///sounds/whitenoise.wav")
         wait_while_speaking()
-        #play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
-        self.audio_service.play("file:///opt/mycroft/skills/mycroft-relaxingsounds.kadams1463/sounds/whitenoise.wav")
+        self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav')[3])
+        #self.audio_service.play("file:///opt/mycroft/skills/mycroft-relaxingsounds.kadams1463/sounds/whitenoise.wav")
+
+    def stop(self):
+        if self.process and self.process.poll() is None:
+            self.speak_dialog("stop-sound")
+            self.process.terminate()
+            self.process.wait()
 
 def create_skill():
     return RelaxingSoundsSkill()
