@@ -19,7 +19,7 @@ LOGGER = getLogger(__name__)
 #################################################
 
 # Create the RelaxingSoundsSkill class.
-class RelaxingSoundsSkill(MycroftSkill)
+class RelaxingSoundsSkill(MycroftSkill):
 
     def __init__(self):
         super(RelaxingSoundsSkill, self).__init__(name="RelaxingSoundsSkill")
