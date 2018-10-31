@@ -5,7 +5,6 @@ from mycroft.util.log import getLogger
 #from mycroft.skills.audioservice import AudioService
 from mycroft.util import play_wav, play_mp3
 from mycroft.audio import wait_while_speaking
-from mycroft.audio import
 import os
 import sys
 
