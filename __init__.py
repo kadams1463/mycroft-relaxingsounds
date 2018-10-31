@@ -42,7 +42,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.speak_dialog("response")
 
     def play_white_noise(self):
-        if white_noise_intent = True:
+        if white_noise_intent == True:
             return self.audio_service.play(["file:///sounds/white-noise.wav"])
         
 
