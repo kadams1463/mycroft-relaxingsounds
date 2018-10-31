@@ -63,9 +63,9 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
 
     def stop(self):
-        if self.play_white_noise()
+        if self.process()
             self.speak_dialog("stop-sound")
-            self.play_white_noise.kill()
+            self.process.kill()
             self.process = None
             
 
