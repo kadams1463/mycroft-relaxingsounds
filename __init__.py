@@ -57,7 +57,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.sound_repeat = self.sound_interval
         next_loop = now + timedelta(seconds=(self.sound_repeat))
         self.cancel_scheduled_event('Loop')
-        self.schedule_event(self.play_white_noise, now(next_loop), name='Loop')
+        self.schedule_event(self.play_white_noise, next_loop, name='Loop')
         if self.process:
             self.process.kill()
         self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
