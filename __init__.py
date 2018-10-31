@@ -91,7 +91,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.sound_repeat = self.sound_interval
         next_loop = now + timedelta(seconds=(self.sound_repeat))
         self.cancel_scheduled_event('Loop')
-        self.schedule_event(self.play_white_noise, next_loop, name='Loop')
+        self.schedule_event(self.play_white_noise, to_local(next_loop), name='Loop')
         if self.process:
             self.process.kill()
         self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
@@ -101,7 +101,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.sound_repeat = self.sound_interval
         next_loop = 29.0
         self.cancel_scheduled_event('Loop')
-        self.schedule_event(self.play_waves, next_loop, name='Loop')
+        self.schedule_event(self.play_waves, to_local(next_loop), name='Loop')
         if self.process:
             self.process.kill()
         self.process = play_wav(os.path.join(skill_path, 'sounds/waves.wav'))
@@ -111,7 +111,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.sound_repeat = self.sound_interval
         next_loop = now + timedelta(seconds=(self.sound_repeat))
         self.cancel_scheduled_event('Loop')
-        self.schedule_event(self.play_rain, next_loop, name='Loop')
+        self.schedule_event(self.play_rain, to_local(next_loop), name='Loop')
         if self.process:
             self.process.kill()
         self.process = play.wav(os.path.join(skill_path, 'sounds/rain.wav'))
