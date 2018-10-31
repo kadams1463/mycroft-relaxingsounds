@@ -4,7 +4,9 @@ from adapt.intent import IntentBuilder
 from mycroft.util.log import getLogger
 from mycroft.skills.audioservice import AudioService
 from mycroft.util import play_wav, play_mp3
+from mycroft.util.time import now_local
 from mycroft.audio import wait_while_speaking
+from datetime import datetime, timedelta
 import os
 import sys
 
@@ -47,6 +49,7 @@ class RelaxingSoundsSkill(MycroftSkill):
     def handle_request_sound_intent(self, message):
         self.speak_dialog("response")
         wait_while_speaking()
+        now = now_local()
         self.sound_repeat = self.sound_interval
         next_loop = now + timedelta(seconds=(self.sound_repeat))
         self.cancel_scheduled_event('Loop')
