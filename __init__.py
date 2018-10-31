@@ -28,6 +28,9 @@ class RelaxingSoundsSkill(MycroftSkill):
         super(RelaxingSoundsSkill, self).__init__(name="RelaxingSoundsSkill")
         self.process = None
 
+    def stop(self):
+        pass
+
     # Initialize the RelaxingSoundsSkill.
     def initialize(self):
         # AudioService from Mycroft Skills library.
@@ -49,11 +52,6 @@ class RelaxingSoundsSkill(MycroftSkill):
             play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
             if self.stop:
                 break
-        
-
-
-    def stop(self):
-        pass
 
 def create_skill():
     return RelaxingSoundsSkill()
