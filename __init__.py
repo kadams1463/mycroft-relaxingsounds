@@ -32,6 +32,24 @@ LOGGER = getLogger(__name__)
 skill_path = "/opt/mycroft/skills/mycroft-relaxingsounds.kadams1463/"
 sys.path.append(skill_path)
 
+try:
+    from mycroft.util.time import to_system
+except:
+    # Until to_system is included in 18.08.3, define it here too
+    from dateutil.tz import gettz, tzlocal
+    def to_system(dt):
+        """ Convert a datetime to the system's local timezone
+        Args:
+            dt (datetime): A datetime (if no timezone, assumed to be UTC)
+        Returns:
+            (datetime): time converted to the local timezone
+        """
+        tz = tzlocal()
+        if dt.tzinfo:
+            return dt.astimezone(tz)
+        else:
+            return dt.replace(tzinfo=gettz("UTC")).astimezone(tz)
+
 # Create the RelaxingSoundsSkill class.
 class RelaxingSoundsSkill(MycroftSkill):
 
@@ -91,7 +109,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.sound_repeat = self.sound_interval
         next_loop = now + timedelta(seconds=(self.sound_repeat))
         self.cancel_scheduled_event('Loop')
-        self.schedule_event(self.play_white_noise, to_local(next_loop), name='Loop')
+        self.schedule_event(self.play_white_noise, to_system(next_loop), name='Loop')
         if self.process:
             self.process.kill()
         self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
@@ -101,7 +119,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.sound_repeat = self.sound_interval
         next_loop = 29.0
         self.cancel_scheduled_event('Loop')
-        self.schedule_event(self.play_waves, to_local(next_loop), name='Loop')
+        self.schedule_event(self.play_waves, to_system(next_loop), name='Loop')
         if self.process:
             self.process.kill()
         self.process = play_wav(os.path.join(skill_path, 'sounds/waves.wav'))
@@ -111,7 +129,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.sound_repeat = self.sound_interval
         next_loop = now + timedelta(seconds=(self.sound_repeat))
         self.cancel_scheduled_event('Loop')
-        self.schedule_event(self.play_rain, to_local(next_loop), name='Loop')
+        self.schedule_event(self.play_rain, to_system(next_loop), name='Loop')
         if self.process:
             self.process.kill()
         self.process = play.wav(os.path.join(skill_path, 'sounds/rain.wav'))
