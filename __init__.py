@@ -5,6 +5,7 @@ from mycroft.util.log import getLogger
 #from mycroft.skills.audioservice import AudioService
 from mycroft.util import play_wav, play_mp3
 from mycroft.audio import wait_while_speaking
+from mycroft.audio import
 import os
 import sys
 
@@ -50,7 +51,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         wait_while_speaking()
         while True:
             play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
-            if self.stop:
+            if self.stop == True:
                 break
 
 def create_skill():
