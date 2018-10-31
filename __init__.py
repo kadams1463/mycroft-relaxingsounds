@@ -31,10 +31,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.audio_service = AudioService(self.emitter)
 
         # Create the RequestSoundIntent using the required request.voc file and optional <sound>.voc files.
-        white_noise_intent = IntentBuilder("RequestSoundIntent")
-        .require("request")
-        .require("white-noise")
-        .build()
+        white_noise_intent = IntentBuilder("RequestSoundIntent").require("request").require("white-noise").build()
 
         # Call back for intents.
         self.register_intent(white_noise_intent, self.handle_request_sound_intent)
