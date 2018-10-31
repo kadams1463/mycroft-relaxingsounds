@@ -32,6 +32,7 @@ LOGGER = getLogger(__name__)
 skill_path = "/opt/mycroft/skills/mycroft-relaxingsounds.kadams1463/"
 sys.path.append(skill_path)
 
+# to_system definition from MyCroft AI (@MycroftAI) default alarm skill. Thank you!
 try:
     from mycroft.util.time import to_system
 except:
@@ -58,7 +59,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.process = None
 
         # Sound interval for the sounds.
-        self.sound_interval = 29.0
+        self.sound_interval = 29
 
 #################################################
 # Skill Initialization and Intent Building
