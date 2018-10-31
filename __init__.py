@@ -58,8 +58,10 @@ class RelaxingSoundsSkill(MycroftSkill):
         super(RelaxingSoundsSkill, self).__init__(name="RelaxingSoundsSkill")
         self.process = None
 
-        # Sound interval for the sounds.
+        # Sound interval for the sounds (in seconds: 30, 15)
         self.sound_interval = 29
+        self.sound_interval2 = 14
+
 
 #################################################
 # Skill Initialization and Intent Building
@@ -127,7 +129,7 @@ class RelaxingSoundsSkill(MycroftSkill):
 
     def play_rain(self, message=None):
         now = now_local()
-        self.sound_repeat = self.sound_interval
+        self.sound_repeat = self.sound_interval2
         next_loop = now + timedelta(seconds=(self.sound_repeat))
         self.cancel_scheduled_event('Loop')
         self.schedule_event(self.play_rain, to_system(next_loop), name='Loop')
