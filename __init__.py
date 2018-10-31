@@ -99,7 +99,7 @@ class RelaxingSoundsSkill(MycroftSkill):
     def play_waves(self, message=None):
         now = now_local()
         self.sound_repeat = self.sound_interval
-        next_loop = now + timedelta(seconds=(self.sound_repeat))
+        next_loop = 29.0
         self.cancel_scheduled_event('Loop')
         self.schedule_event(self.play_waves, next_loop, name='Loop')
         if self.process:
