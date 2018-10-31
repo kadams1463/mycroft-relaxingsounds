@@ -28,14 +28,13 @@ class RelaxingSoundsSkill(MycroftSkill):
         super(RelaxingSoundsSkill, self).__init__(name="RelaxingSoundsSkill")
         self.process = None
 
+        # Sound interval for the sounds.
+        self.sound_interval = 30.0
+
     # Initialize the RelaxingSoundsSkill.
     def initialize(self):
         # AudioService from Mycroft Skills library.
         #self.audio_service = AudioService(self.emitter)
-
-        self.is_listening = False
-        self.add_event('recognizer_loop:audio_output_start', self.handle_loop_started)
-        self.add_event('recognizer_loop:audio_output_end', self.handle_loop_stopped)
 
         # Create the RequestSoundIntent using the required request.voc file and optional <sound>.voc files.
         white_noise_intent = IntentBuilder("RequestSoundIntent").require("request").require("white-noise").build()
@@ -48,19 +47,20 @@ class RelaxingSoundsSkill(MycroftSkill):
     def handle_request_sound_intent(self, message):
         self.speak_dialog("response")
         wait_while_speaking()
-        self.handle_loop_started = self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
+        self.sound_repeat = self.sound_interval
+        next_loop = now + timedelta(seconds=(self.sound_repeat))
+        self.cancel_scheduled_event('Loop')
+        self.schedule_event(self._loop_sound, to_system(next_loop), name='Loop')
+        if self.process:
+            self.process.kill()
+        self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
         #self.audio_service.play("file:///opt/mycroft/skills/mycroft-relaxingsounds.kadams1463/sounds/whitenoise.wav")
 
     def stop(self):
-        def handle_loop_stopped(self):
+        if self.process:
             self.speak_dialog("stop-sound")
-            wait_while_speaking()
-            self.process.terminate()
-            self.process.wait()
-        #if self.process and self.process.poll() is None:
-            #self.speak_dialog("stop-sound")
-            #self.process.terminate()
-            #self.process.wait()
+            self.process.kill()
+            self.process = None
             
 
 def create_skill():
