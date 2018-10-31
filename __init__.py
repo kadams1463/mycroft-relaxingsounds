@@ -17,7 +17,7 @@ LOGGER = getLogger(__name__)
 #################################################
 
 # Set the skill path.
-skill_path = "/opt/mycroft/skills/mycroft-relaxingsounds/"
+skill_path = "/opt/mycroft/skills/mycroft-relaxingsounds.kadams1463/"
 sys.path.append(skill_path)
 
 # Create the RelaxingSoundsSkill class.
