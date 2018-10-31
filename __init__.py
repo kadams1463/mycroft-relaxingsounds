@@ -40,17 +40,16 @@ class RelaxingSoundsSkill(MycroftSkill):
     # Create the dialog from the response.dialog for Mycroft to speak.
     def handle_request_sound_intent(self, message):
         self.speak_dialog("response")
+        #return self.audio_service.play("file:///sounds/whitenoise.wav")
 
     def play_white_noise(self):
         if white_noise_intent == True:
-            return self.audio_service.play(["file:///sounds/white-noise.wav"])
+            return self.audio_service.play("file:///sounds/white-noise.wav")
         
 
 
     def stop(self):
-        if self.audio_service:
-            self.process.terminate()
-            self.process.wait()
+        pass
 
 def create_skill():
     return RelaxingSoundsSkill()
