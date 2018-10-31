@@ -45,7 +45,10 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.speak_dialog("response")
         #self.audio_service.play("file:///sounds/whitenoise.wav")
         wait_while_speaking()
-        play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
+        while True:
+            play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
+            if self.stop:
+                break
         
 
 
