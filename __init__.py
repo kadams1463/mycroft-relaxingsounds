@@ -45,20 +45,20 @@ class RelaxingSoundsSkill(MycroftSkill):
         # Call back for intents.
         self.register_intent(white_noise_intent, self.handle_request_sound_intent)
 
+    def play_white_noise(self, message=None):
+        now = now_local()
+        self.sound_repeat = self.sound_interval
+        next_loop = now + timedelta(seconds=(self.sound_repeat))
+        self.cancel_scheduled_event('Loop')
+        self.schedule_event(self.play_white_noise, now(next_loop), name='Loop')
+        if self.process:
+            self.process.kill()
+        self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
 
     # Create the dialog from the response.dialog for Mycroft to speak.
     def handle_request_sound_intent(self, message):
         self.speak_dialog("response")
         wait_while_speaking()
-        def play_white_noise(self, message=None):
-            now = now_local()
-            self.sound_repeat = self.sound_interval
-            next_loop = now + timedelta(seconds=(self.sound_repeat))
-            self.cancel_schedule_event('Loop')
-            self.schedule_event(self.play_white_noise, now(next_loop), name='Loop')
-            if self.process:
-                self.process.terminate()
-            self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
         self.process = self.play_white_noise()
         #self.audio_service.play("file:///opt/mycroft/skills/mycroft-relaxingsounds.kadams1463/sounds/whitenoise.wav")
 
