@@ -48,8 +48,7 @@ class RelaxingSoundsSkill(MycroftSkill):
     def handle_request_sound_intent(self, message):
         self.speak_dialog("response")
         wait_while_speaking()
-        def handle_loop_started(self):
-            self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
+        self.handle_loop_started = self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
         #self.audio_service.play("file:///opt/mycroft/skills/mycroft-relaxingsounds.kadams1463/sounds/whitenoise.wav")
 
     def stop(self):
