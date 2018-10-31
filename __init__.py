@@ -8,7 +8,6 @@ from mycroft.util.time import now_local
 from mycroft.audio import wait_while_speaking
 from mycroft.messagebus.message import Message
 from datetime import datetime, timedelta
-from mycroft.util.time import to_system
 import os
 import sys
 
@@ -55,7 +54,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.sound_repeat = self.sound_interval
         next_loop = now + timedelta(seconds=(self.sound_repeat))
         self.cancel_scheduled_event('Loop')
-        self.schedule_event(self._handle_request_sound_intent, to_system(next_loop), name='Loop')
+        self.schedule_event(self._handle_request_sound_intent, to_local(next_loop), name='Loop')
         if self.process:
             self.process.kill()
         self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
