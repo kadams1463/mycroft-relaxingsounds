@@ -59,7 +59,7 @@ class RelaxingSoundsSkill(MycroftSkill):
     def handle_request_sound_intent(self, message):
         self.speak_dialog("response")
         wait_while_speaking()
-        self.process = self.play_white_noise()
+        self.play_white_noise()
         #self.audio_service.play("file:///opt/mycroft/skills/mycroft-relaxingsounds.kadams1463/sounds/whitenoise.wav")
 
     def stop(self):
