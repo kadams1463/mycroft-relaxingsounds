@@ -59,6 +59,7 @@ class RelaxingSoundsSkill(MycroftSkill):
             if self.process:
                 self.process.terminate()
             self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
+        self.play_white_noise
         #self.audio_service.play("file:///opt/mycroft/skills/mycroft-relaxingsounds.kadams1463/sounds/whitenoise.wav")
 
     def stop(self):
