@@ -4,10 +4,8 @@ from adapt.intent import IntentBuilder
 from mycroft.util.log import getLogger
 from mycroft.skills.audioservice import AudioService
 from mycroft.util import play_wav, play_mp3
-from mycroft.audio import wait_while_speaking, is_speaking
-from mycroft.skills.common_play_skill import CommonPlaySkill, CPSMatchLevel
-from os import listdir
-from os.path import join, dirname, exists
+import os
+import sys
 
 #################################################
 
@@ -17,6 +15,10 @@ __author__ = 'kadams1463'
 LOGGER = getLogger(__name__)
 
 #################################################
+
+# Set the skill path.
+skill_path = "/opt/mycroft/skills/mycroft-relaxingsounds/"
+sys.path.append(skill_path)
 
 # Create the RelaxingSoundsSkill class.
 class RelaxingSoundsSkill(MycroftSkill):
@@ -40,7 +42,7 @@ class RelaxingSoundsSkill(MycroftSkill):
     # Create the dialog from the response.dialog for Mycroft to speak.
     def handle_request_sound_intent(self, message):
         self.speak_dialog("response")
-        return self.audio_service.play("file:///sounds/whitenoise.wav")
+        self.audio_service.play("file:///sounds/whitenoise.wav")
         
 
 
