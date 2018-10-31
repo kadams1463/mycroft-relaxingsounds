@@ -2,7 +2,7 @@
 from mycroft.skills.core import MycroftSkill, intent_handler, intent_file_handler
 from adapt.intent import IntentBuilder
 from mycroft.util.log import getLogger
-#from mycroft.skills.audioservice import AudioService
+from mycroft.skills.audioservice import AudioService
 from mycroft.util import play_wav, play_mp3
 from mycroft.audio import wait_while_speaking
 import os
@@ -48,10 +48,8 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.speak_dialog("response")
         #self.audio_service.play("file:///sounds/whitenoise.wav")
         wait_while_speaking()
-        while True:
-            play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
-            if self.stop == True:
-                break
+        #play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
+        self.audio_service.play("file:///opt/mycroft/skills/mycroft-relaxingsounds.kadams1463/sounds/whitenoise.wav")
 
 def create_skill():
     return RelaxingSoundsSkill()
