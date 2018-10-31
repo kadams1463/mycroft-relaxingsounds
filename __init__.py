@@ -4,7 +4,7 @@ from adapt.intent import IntentBuilder
 from mycroft.util.log import getLogger
 from mycroft.skills.audioservice import AudioService
 from mycroft.util import play_wav, play_mp3
-from mycroft.util.time import now_local
+from mycroft.util.time import now_local to_system
 from mycroft.audio import wait_while_speaking
 from mycroft.messagebus.message import Message
 from datetime import datetime, timedelta
