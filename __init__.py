@@ -142,6 +142,7 @@ class RelaxingSoundsSkill(MycroftSkill):
     def stop(self):
         if self.process:
             self.speak_dialog("stop-sound")
+            self.process.kill()
             self.cancel_scheduled_event('Loop')
             self.process = None
             
