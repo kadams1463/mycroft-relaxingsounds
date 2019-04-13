@@ -59,7 +59,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.process = None
 
         # Sound interval for the sounds (in seconds: 30, 15)
-        self.sound_interval = 1
+        self.sound_interval = 0.5
         self.sound_interval2 = 14
 
 
