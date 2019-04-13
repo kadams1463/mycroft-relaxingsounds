@@ -12,11 +12,8 @@ from mycroft.util.time import now_local
 from mycroft.audio import wait_while_speaking
 from mycroft.messagebus.message import Message
 from datetime import datetime, timedelta
-import pyaudio
 import os
 import sys
-import wave
-import threading
 
 #################################################
 # Base Code for Author and Logging
@@ -57,13 +54,13 @@ except:
 # Create the RelaxingSoundsSkill class.
 class RelaxingSoundsSkill(MycroftSkill):
 
-    CHUNK = 1024
-
-    def __init__(self,sounds,loop=True):
+    def __init__(self):
         super(RelaxingSoundsSkill, self).__init__(name="RelaxingSoundsSkill")
-        
-        self.filepath = os.path.abspath(sounds)
-        self.loop = loop
+        self.process = None
+
+        # Sound interval for the sounds (in seconds: 30, 15)
+        self.sound_interval = 29
+        self.sound_interval2 = 14
 
 
 #################################################
@@ -111,34 +108,46 @@ class RelaxingSoundsSkill(MycroftSkill):
 #################################################
 
     def play_white_noise(self, message=None):
-       wf = wave.open(self.filepath, 'whitenoise.wav')
-       player = pyaudio.PyAudio()
+        now = now_local()
+        self.sound_repeat = self.sound_interval
+        next_loop = now + timedelta(seconds=(self.sound_repeat))
+        self.cancel_scheduled_event('Loop')
+        self.schedule_event(self.play_white_noise, to_system(next_loop), name='Loop')
+        if self.process:
+            self.process.kill()
+        self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
 
+    def play_waves(self, message=None):
+        now = now_local()
+        self.sound_repeat = self.sound_interval
+        next_loop = now + timedelta(seconds=(self.sound_repeat))
+        self.cancel_scheduled_event('Loop')
+        self.schedule_event(self.play_waves, to_system(next_loop), name='Loop')
+        if self.process:
+            self.process.kill()
+        self.process = play_wav(os.path.join(skill_path, 'sounds/waves.wav'))
 
-       # Open Output Stream (based on PyAudio tutorial)
-       stream = player.open(format = player.get_format_from_width(wf.getsampwidth()),
-       channels = wf.getnchannels(),
-       rate = wf.getframerate(),
-       output = True)
-
-       data = wf.readframes(self.CHUNK)
-       while self.loop:
-           stream.write(data)
-           data = wf.readframes(self.CHUNK)
-           if data == '': # If the file is over then rewind it.
-               wf.rewind()
-               data = wf.readframes(self.CHUNK)
-        
-       stream.close()
-       data = wf.readframes(self.chunk) 
+    def play_rain(self, message=None):
+        now = now_local()
+        self.sound_repeat = self.sound_interval2
+        next_loop = now + timedelta(seconds=(self.sound_repeat))
+        self.cancel_scheduled_event('Loop')
+        self.schedule_event(self.play_rain, to_system(next_loop), name='Loop')
+        if self.process:
+            self.process.kill()
+        self.process = play.wav(os.path.join(skill_path, 'sounds/rain.wav'))
 
 #################################################
 # Stop Request Section
 #################################################
 
     def stop(self):
-        self.speak_dialog("stop-sound")
-        self.loop = False
+        if self.process:
+            self.speak_dialog("stop-sound")
+            self.process.kill()
+            self.cancel_scheduled_event('Loop')
+            self.process = None
+            
 
-def create_skil():
+def create_skill():
     return RelaxingSoundsSkill()
