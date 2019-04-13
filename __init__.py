@@ -59,7 +59,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.process = None
 
         # Sound interval for the sounds (in seconds: 30, 15)
-        self.sound_interval = 29
+        self.sound_interval = 1
         self.sound_interval2 = 14
 
 
@@ -135,7 +135,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.schedule_event(self.play_rain, to_system(next_loop), name='Loop')
         if self.process:
             self.process.kill()
-        self.process = play.wav(os.path.join(skill_path, 'sounds/rain.wav'))
+        self.process = play_wav(os.path.join(skill_path, 'sounds/rain.wav'))
 
 #################################################
 # Stop Request Section
