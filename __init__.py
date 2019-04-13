@@ -114,8 +114,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.cancel_scheduled_event('Loop')
         self.schedule_event(self.play_white_noise, to_system(next_loop), name='Loop')
         if self.process:
-            self.process.kill()
-        self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
+            self.process = play_wav(os.path.join(skill_path, 'sounds/whitenoise.wav'))
 
     def play_waves(self, message=None):
         now = now_local()
@@ -124,8 +123,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.cancel_scheduled_event('Loop')
         self.schedule_event(self.play_waves, to_system(next_loop), name='Loop')
         if self.process:
-            self.process.kill()
-        self.process = play_wav(os.path.join(skill_path, 'sounds/waves.wav'))
+            self.process = play_wav(os.path.join(skill_path, 'sounds/waves.wav'))
 
     def play_rain(self, message=None):
         now = now_local()
@@ -134,8 +132,7 @@ class RelaxingSoundsSkill(MycroftSkill):
         self.cancel_scheduled_event('Loop')
         self.schedule_event(self.play_rain, to_system(next_loop), name='Loop')
         if self.process:
-            self.process.kill()
-        self.process = play.wav(os.path.join(skill_path, 'sounds/rain.wav'))
+            self.process = play.wav(os.path.join(skill_path, 'sounds/rain.wav'))
 
 #################################################
 # Stop Request Section
